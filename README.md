@@ -1,5 +1,7 @@
 # THE BABA-YAGA
 
+<img src="https://github.com/thebabayagakiller/BABA-YAGA/blob/main/Screenshot%202024-03-24%20125407.png?raw=true">
+
 ⭐ FOR LINUX : [
 
 sudp apt-get install python3
